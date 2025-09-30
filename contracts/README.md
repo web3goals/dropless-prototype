@@ -1,13 +1,16 @@
-# Sample Hardhat Project
+# Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+### Commands
 
-Try running some of the following tasks:
+- Install dependencies - `npm install`
+- Clean the project - `npx hardhat clean`
+- Run tests - `npx hardhat test`
+- Make a deployment - `npx hardhat ignition deploy ignition/modules/Lock.ts --network sepolia`
+- Run a script - `npx hardhat run scripts/script.ts --network sepolia`
+- Verify a contract - `npx hardhat verify 0x0000000000000000000000000000000000000000 --network sepolia`
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+### Template for .env file
+
+```
+VECHAIN_TESTNET_MNEMONIC=
 ```
