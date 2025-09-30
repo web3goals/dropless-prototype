@@ -4,7 +4,7 @@ import Lock from "../artifacts/contracts/Lock.sol/Lock.json";
 import { vechainTestnet } from "./chains/vechain-testnet";
 
 async function main() {
-  console.log("Starting playground script...");
+  console.log("Using Lock...");
 
   if (hre.network.name !== "vechainTestnet") {
     console.error("This script only works on the VeChain Testnet, exiting...");

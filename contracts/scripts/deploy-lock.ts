@@ -14,12 +14,14 @@ async function main() {
   const publicClient = await hre.viem.getPublicClient({
     chain: vechainTestnet,
   });
-  const [wallet] = await hre.viem.getWalletClients({ chain: vechainTestnet });
+  const [walletClient] = await hre.viem.getWalletClients({
+    chain: vechainTestnet,
+  });
 
-  const hash = await wallet.deployContract({
+  const hash = await walletClient.deployContract({
     abi: Lock.abi,
     bytecode: Lock.bytecode as Hex,
-    args: [wallet.account.address],
+    args: [walletClient.account.address],
   });
   const receipt = await publicClient.waitForTransactionReceipt({ hash });
   const contractAddress = receipt.contractAddress;
