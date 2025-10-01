@@ -11,5 +11,5 @@
 ### Template for .env file
 
 ```
-
+MONGODB_URI=""
 ```
