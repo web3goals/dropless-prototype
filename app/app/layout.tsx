@@ -5,16 +5,17 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Libre_Baskerville } from "next/font/google";
 import { Toaster } from "sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fontSans = Libre_Baskerville({
+  weight: ["400", "700"],
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fontMono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -39,8 +40,8 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-background font-sans antialiased",
-          geistSans.variable,
-          geistMono.variable
+          fontSans.variable,
+          fontMono.variable
         )}
       >
         <ThemeProvider
