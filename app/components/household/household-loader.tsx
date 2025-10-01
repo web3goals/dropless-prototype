@@ -39,7 +39,12 @@ export function HouseholdLoader() {
   }, [connectedWallet?.address]);
 
   if (household) {
-    return <Household household={household} />;
+    return (
+      <Household
+        household={household}
+        onUpdate={(household) => setHousehold(household)}
+      />
+    );
   }
 
   if (household === null) {

@@ -29,3 +29,11 @@ export async function insertHousehold(household: Household): Promise<ObjectId> {
   const insertOneResult = await collection.insertOne(household);
   return insertOneResult.insertedId;
 }
+
+export async function updateHousehold(household: Household): Promise<void> {
+  console.log("Updating a household...");
+  const collection = await getCollection<Household>(
+    mongodbConfig.collections.households
+  );
+  await collection.updateOne({ _id: household._id }, { $set: household });
+}
