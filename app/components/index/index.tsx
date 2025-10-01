@@ -18,13 +18,15 @@ export function Index() {
           className="w-full rounded-md"
         />
         {/* Title, subtitle */}
-        <h2 className="text-3xl font-bold tracking-tight text-center mt-6">
+        <h1 className="text-4xl font-extrabold tracking-tight text-balance text-secondary text-center mt-6">
           Turn saved water into crypto rewards
-        </h2>
-        <h4 className="text-xl tracking-tight text-center mt-2">
+        </h1>
+        <h4 className="text-xl tracking-tight text-balance text-center mt-4">
           Earn $B3TR for consuming less water than the average household
         </h4>
-        <p className="text-center mt-2">Powered by VeChain and VeBetterDAO</p>
+        <p className="text-muted-foreground  text-balance text-center mt-4">
+          Powered by VeChain and VeBetterDAO
+        </p>
         {/* Action */}
         <Link href="/household">
           <Button className="mt-6">
