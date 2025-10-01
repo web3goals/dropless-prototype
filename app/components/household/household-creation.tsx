@@ -45,7 +45,7 @@ function HouseholdCreationHero() {
         <h1 className="text-4xl font-extrabold tracking-tight text-balance text-secondary-foreground">
           Household
         </h1>
-        <p className="text-secondary-foreground">
+        <p className="text-secondary-foreground mt-2">
           Enter household information to begin earning rewards for saving water
         </p>
       </div>
