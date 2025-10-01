@@ -1,3 +1,4 @@
+import { HouseholdReading } from "@/types/household";
 import { ObjectId } from "mongodb";
 
 export class Household {
@@ -6,14 +7,7 @@ export class Household {
     public owner: string, // Owner's wallet address, lowercase
     public size: number,
     public country: string,
-    public readings: {
-      created: Date;
-      value: number;
-      consumption?: number;
-      avgConsumption?: number;
-      reward?: string;
-      rewardTxHash?: string;
-    }[],
+    public readings: HouseholdReading[],
     public _id?: ObjectId
   ) {}
 }
