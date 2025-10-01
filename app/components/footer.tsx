@@ -8,7 +8,7 @@ export function Footer() {
   const pathname = usePathname();
 
   return (
-    <footer className="sticky bottom-0 z-40 bg-background border-t">
+    <footer className="sticky bottom-0 z-30 bg-background border-t">
       <div className="container mx-auto flex flex-row gap-2 items-center justify-center h-16 px-4">
         <Link href="/household">
           <Button variant={pathname === "/household" ? "default" : "secondary"}>

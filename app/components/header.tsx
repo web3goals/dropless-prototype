@@ -1,17 +1,17 @@
 "use client";
 
 import { appConfig } from "@/config/app";
+import { WalletButton } from "@vechain/vechain-kit";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-background border-b">
       <div className="container mx-auto flex items-center gap-4 h-16 px-4">
         {/* Left part */}
-        <Link href="/" className="flex items-center space-x-3">
-          <div className="flex flex-col items-center size-9">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex items-center size-9">
             <Image
               src="/images/icon.png"
               alt="Icon"
@@ -26,11 +26,10 @@ export function Header() {
         </Link>
         {/* Right part */}
         <div className="flex-1 flex items-center justify-end gap-4">
-          <Link href={appConfig.links.x} target="_blank">
-            <Button size="sm" variant="secondary">
-              💙 Built by kiv1n
-            </Button>
-          </Link>
+          <WalletButton
+            mobileVariant="iconDomainAndAssets"
+            desktopVariant="iconDomainAndAssets"
+          />
         </div>
       </div>
     </header>

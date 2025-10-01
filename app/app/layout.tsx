@@ -1,5 +1,6 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { VeChainProvider } from "@/components/vechain-provider";
 import { appConfig } from "@/config/app";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
@@ -49,12 +50,14 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <div className="flex-1">{children}</div>
-            <Footer />
-            <Toaster />
-          </div>
+          <VeChainProvider>
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <div className="flex-1">{children}</div>
+              <Footer />
+              <Toaster />
+            </div>
+          </VeChainProvider>
         </ThemeProvider>
       </body>
     </html>
