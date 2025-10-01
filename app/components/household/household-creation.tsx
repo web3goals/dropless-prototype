@@ -1,8 +1,10 @@
 import { handleError } from "@/lib/error";
+import { cn } from "@/lib/utils";
 import { Household } from "@/mongodb/models/household";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWallet } from "@vechain/vechain-kit";
 import axios from "axios";
+import { ClassValue } from "clsx";
 import { ArrowRightIcon, Loader2Icon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,6 +24,38 @@ import { Input } from "../ui/input";
 
 export function HouseholdCreation(props: {
   onCreate: (household: Household) => void;
+}) {
+  return (
+    <div className="max-w-xl mx-auto px-4 py-8">
+      <div className="flex flex-col items-center">
+        <HouseholdCreationHero />
+        <HouseholdCreationForm onCreate={props.onCreate} className="mt-8" />
+      </div>
+    </div>
+  );
+}
+
+function HouseholdCreationHero() {
+  return (
+    <div className="w-full flex flex-row gap-4 bg-secondary border rounded-lg p-6">
+      <Avatar className="size-16">
+        <AvatarFallback className="text-xl bg-primary">🏠</AvatarFallback>
+      </Avatar>
+      <div>
+        <h1 className="text-4xl font-extrabold tracking-tight text-balance text-secondary-foreground">
+          Household
+        </h1>
+        <p className="text-secondary-foreground">
+          Enter household information to begin earning rewards for saving water
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function HouseholdCreationForm(props: {
+  onCreate: (household: Household) => void;
+  className?: ClassValue;
 }) {
   const { connectedWallet } = useWallet();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -69,93 +103,76 @@ export function HouseholdCreation(props: {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-8">
-      <div className="flex flex-col items-center">
-        {/* Hero */}
-        <div className="w-full flex flex-row gap-4 bg-secondary border rounded-lg p-6">
-          <Avatar className="size-16">
-            <AvatarFallback className="text-xl bg-primary">🏠</AvatarFallback>
-          </Avatar>
-          <div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-balance text-secondary-foreground">
-              Household
-            </h1>
-            <p className="text-secondary-foreground">
-              Enter household information to begin earning rewards for saving
-              water
-            </p>
-          </div>
-        </div>
-        {/* Form */}
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="w-full flex flex-col gap-4 items-center mt-8"
-          >
-            <FormField
-              control={form.control}
-              name="size"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Number of people *</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="2"
-                      type="number"
-                      disabled={isProcessing}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Country *</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Netherlands"
-                      disabled={isProcessing}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="reading"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Current water meter reading (m³) *</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="0.42"
-                      type="number"
-                      disabled={isProcessing}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" variant="default" disabled={isProcessing}>
-              {isProcessing ? (
-                <Loader2Icon className="animate-spin" />
-              ) : (
-                <ArrowRightIcon />
-              )}
-              Save
-            </Button>
-          </form>
-        </Form>
-      </div>
-    </div>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className={cn(
+          "w-full flex flex-col gap-4 items-center",
+          props.className
+        )}
+      >
+        <FormField
+          control={form.control}
+          name="size"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Number of people *</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="2"
+                  type="number"
+                  disabled={isProcessing}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="country"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Country *</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Netherlands"
+                  disabled={isProcessing}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="reading"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Current water meter reading (m³) *</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="0.42"
+                  type="number"
+                  disabled={isProcessing}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" variant="default" disabled={isProcessing}>
+          {isProcessing ? (
+            <Loader2Icon className="animate-spin" />
+          ) : (
+            <ArrowRightIcon />
+          )}
+          Save
+        </Button>
+      </form>
+    </Form>
   );
 }
