@@ -52,7 +52,9 @@ function HouseholdReadingCardAttributes(props: {
     <div className={cn("flex flex-col gap-2", props.className)}>
       <p>
         🔢 Value{" — "}
-        <span className="font-semibold">{props.reading.value} m³</span>
+        <span className="font-semibold">
+          {props.reading.value.toFixed(2)} m³
+        </span>
         {props.reading.imageUrl && (
           <>
             {" — "}
@@ -68,7 +70,7 @@ function HouseholdReadingCardAttributes(props: {
         <p>
           🚰 Consumption{" — "}
           <span className="font-semibold">
-            {props.reading.consumption} m³ / day
+            {props.reading.consumption.toFixed(2)} m³ / day
           </span>
         </p>
       )}
@@ -76,7 +78,7 @@ function HouseholdReadingCardAttributes(props: {
         <p>
           ℹ️ Avg. consumption{" — "}
           <span className="font-semibold">
-            {props.reading.avgConsumption} m³ / day
+            {props.reading.avgConsumption.toFixed(2)} m³ / day
           </span>
         </p>
       )}
