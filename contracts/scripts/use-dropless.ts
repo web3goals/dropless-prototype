@@ -20,9 +20,14 @@ async function main() {
 
   const { request } = await publicClient.simulateContract({
     abi: DropLess.abi,
-    address: "0x6679a4254aafbbb189c5028bd1a2f0a83daacbe5" as Address,
-    functionName: "claimReward",
-    args: [parseEther("1")],
+    address: "0x12d4e8aca8a572fa19d8feacc3d4808dd468106f" as Address,
+    functionName: "sendReward",
+    args: [
+      parseEther("1"),
+      "0xc958bebb81048ba99dcea94db4d7d4e4509db23d",
+      "https://yellow-mute-echidna-168.mypinata.cloud/ipfs/bafybeie26ryfm3bmud6d5qetjdn3xly5uof4uwwo6yxclavoubuhzcek3e",
+      1_000_000,
+    ],
     account: walletClient.account,
   });
   const hash = await walletClient.writeContract(request);
