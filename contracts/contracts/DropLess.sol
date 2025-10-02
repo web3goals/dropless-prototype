@@ -14,6 +14,10 @@ contract DropLess {
         appId = _appId;
     }
 
+    // TODO: Accept proof
+    // TODO: Implement
+    function sendReward() external {}
+
     function claimReward(uint256 _amount) external {
         x2EarnRewardsPool.distributeReward(
             appId,

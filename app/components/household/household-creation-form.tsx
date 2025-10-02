@@ -21,6 +21,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
+// TODO: Add date
 export function HouseholdCreationForm(props: {
   onCreate: (household: Household) => void;
   className?: ClassValue;
@@ -119,7 +120,7 @@ export function HouseholdCreationForm(props: {
           name="reading"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Current water meter reading (m³) *</FormLabel>
+              <FormLabel>Last water meter reading (m³) *</FormLabel>
               <FormControl>
                 <Input
                   placeholder="0.42"
