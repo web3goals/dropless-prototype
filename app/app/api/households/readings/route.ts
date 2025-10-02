@@ -2,7 +2,7 @@ import { createFailedApiResponse, createSuccessApiResponse } from "@/lib/api";
 import { calculateConsumption } from "@/lib/consumption";
 import { extractReadingFromImage } from "@/lib/gemini";
 import { uploadImage } from "@/lib/pinata";
-import { distributeReward } from "@/lib/reward";
+import { sendReward } from "@/lib/reward";
 import { findHouseholds, updateHousehold } from "@/mongodb/services/household";
 import { NextRequest } from "next/server";
 import z from "zod";
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const { consumption, avgConsumption, saving } = calculateConsumption();
 
     // Calculate and distribute reward
-    const { reward, rewardTxHash } = await distributeReward();
+    const { reward, rewardTxHash } = await sendReward();
 
     // Update household with new reading
     household.readings.push({

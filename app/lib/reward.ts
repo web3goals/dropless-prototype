@@ -1,7 +1,7 @@
 import { parseEther } from "viem";
 
 // TODO: Implement
-export async function distributeReward(): Promise<{
+export async function sendReward(): Promise<{
   reward: string | undefined;
   rewardTxHash: string | undefined;
 }> {
