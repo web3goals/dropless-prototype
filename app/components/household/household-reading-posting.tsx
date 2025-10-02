@@ -84,7 +84,7 @@ export function HouseholdReadingPosting(props: {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-sm">
+        <div className="mx-auto w-full max-w-sm overflow-y-auto">
           <DrawerHeader>
             <DrawerTitle>Post reading</DrawerTitle>
             <DrawerDescription>
