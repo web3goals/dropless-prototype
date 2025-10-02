@@ -1,12 +1,12 @@
 import { HouseholdReading } from "@/types/household";
 import { ClassValue } from "clsx";
+import { ShareIcon } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { formatEther } from "viem";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 
-// TODO: Add share button
-// TODO: Display reading image url
 export function HouseholdReadingCard(props: {
   reading: HouseholdReading;
   className?: ClassValue;
@@ -31,6 +31,17 @@ export function HouseholdReadingCard(props: {
           <p>
             🔢 Value —{" "}
             <span className="font-semibold">{props.reading.value} m³</span>
+            {props.reading.imageUrl && (
+              <>
+                {" "}
+                —{" "}
+                <Link href={props.reading.imageUrl} target="_blank">
+                  <Button variant="link" className="text-base p-0 m-0 h-auto">
+                    Image
+                  </Button>
+                </Link>
+              </>
+            )}
           </p>
           {props.reading.consumption && (
             <p>
@@ -48,20 +59,35 @@ export function HouseholdReadingCard(props: {
               </span>
             </p>
           )}
-          {props.reading.reward && props.reading.rewardTxHash && (
+          {props.reading.reward && (
             <p>
-              🪙 Reward — {formatEther(BigInt(props.reading.reward))} $B3TR —{" "}
-              <Link
-                href={`https://explore-testnet.vechain.org/transactions/${props.reading.rewardTxHash}`}
-                target="_blank"
-              >
-                <Button variant="link" className="text-base p-0 m-0 h-auto">
-                  Transaction
-                </Button>
-              </Link>
+              🪙 Reward —{" "}
+              <span className="font-semibold">
+                {formatEther(BigInt(props.reading.reward))} $B3TR
+              </span>
+              {props.reading.rewardTxHash && (
+                <>
+                  {" "}
+                  —{" "}
+                  <Link
+                    href={`https://explore-testnet.vechain.org/transactions/${props.reading.rewardTxHash}`}
+                    target="_blank"
+                  >
+                    <Button variant="link" className="text-base p-0 m-0 h-auto">
+                      Transaction
+                    </Button>
+                  </Link>
+                </>
+              )}
             </p>
           )}
         </div>
+        <Button
+          className="mt-4"
+          onClick={() => toast.info("Soon, stay in touch...")}
+        >
+          <ShareIcon /> Share
+        </Button>
       </div>
     </div>
   );
