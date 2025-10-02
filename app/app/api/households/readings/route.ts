@@ -45,12 +45,12 @@ export async function POST(request: NextRequest) {
 
     // Prepare data
     // TODO: Use real data
-    const value = 2.05;
-    const consumption = 0.32;
-    const avgConsumption = 0.5;
-    const reward = "3000000000000000000"; // 3 $B3TR
+    const value = 459;
+    const consumption = 0.67;
+    const avgConsumption = 0.8;
+    const reward = "2000000000000000000";
     const rewardTxHash =
-      "0xefbe23cb80f90cefed6150742428bcfa6fe071777df3f5bdf196eb015c528f9a";
+      "0xa8e18c1c049693bae2e09267833131c4c56591b82bc5f2d9b3c363a175ecc9c4";
 
     // Update household with new reading
     household.readings.push({
