@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 
-export function HouseholdPostReadingButton(props: {
+export function HouseholdReadingPosting(props: {
   onPost: (household: HouseholdModel) => void;
   className?: ClassValue;
 }) {
@@ -56,7 +56,7 @@ export function HouseholdPostReadingButton(props: {
       const household: HouseholdModel = data.data.household;
 
       props.onPost(household);
-      toast.success("Saved");
+      toast.success("Posted");
       setOpen(false);
       setImage(null);
     } catch (error) {
@@ -113,7 +113,7 @@ export function HouseholdPostReadingButton(props: {
                   ) : (
                     <ArrowRightIcon />
                   )}{" "}
-                  Send Photo
+                  Post
                 </Button>
               </>
             ) : (
