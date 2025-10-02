@@ -125,7 +125,7 @@ export function HouseholdCreationForm(props: {
               <FormLabel>Last water meter reading (m³) *</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="0.42"
+                  placeholder="42"
                   type="number"
                   disabled={isProcessing}
                   {...field}
