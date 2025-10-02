@@ -2,8 +2,8 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 
 export function HouseholdCreationHero() {
   return (
-    <div className="w-full flex flex-row gap-4 bg-secondary border rounded-lg p-6">
-      <Avatar className="size-16">
+    <div className="w-full flex flex-row gap-3 bg-secondary border rounded-lg px-3 py-4">
+      <Avatar className="size-12">
         <AvatarFallback className="text-xl bg-primary">🏠</AvatarFallback>
       </Avatar>
       <div>

@@ -12,8 +12,8 @@ export function HouseholdReadingCard(props: {
   className?: ClassValue;
 }) {
   return (
-    <div className="w-full flex flex-row gap-4 bg-card border rounded-lg p-6">
-      <Avatar className="size-16">
+    <div className="w-full flex flex-row gap-3 bg-card border rounded-lg px-3 py-4">
+      <Avatar className="size-12">
         <AvatarFallback className="text-xl bg-primary">💧</AvatarFallback>
       </Avatar>
       <div>
@@ -53,7 +53,7 @@ export function HouseholdReadingCard(props: {
           )}
           {props.reading.avgConsumption && (
             <p>
-              ℹ️ Avg.consumption —{" "}
+              ℹ️ Avg. consumption —{" "}
               <span className="font-semibold">
                 {props.reading.avgConsumption} m³ / day
               </span>
@@ -74,7 +74,7 @@ export function HouseholdReadingCard(props: {
                     target="_blank"
                   >
                     <Button variant="link" className="text-base p-0 m-0 h-auto">
-                      Transaction
+                      TX
                     </Button>
                   </Link>
                 </>
