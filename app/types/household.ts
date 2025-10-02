@@ -4,6 +4,7 @@ export type HouseholdReading = {
   value?: number;
   consumption?: number;
   avgConsumption?: number;
+  saving?: number;
   reward?: string;
   rewardTxHash?: string;
 };

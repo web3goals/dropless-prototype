@@ -29,7 +29,7 @@ export function HouseholdHero(props: { household: HouseholdModel }) {
             <span className="font-semibold">{props.household.country}</span>
           </p>
           <p className="text-secondary-foreground">
-            🪙 Earned —{" "}
+            💰 Earned —{" "}
             <span className="font-semibold">{formatEther(rewards)} $B3TR</span>
           </p>
         </div>

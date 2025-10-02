@@ -50,60 +50,117 @@ function HouseholdReadingCardAttributes(props: {
 }) {
   return (
     <div className={cn("flex flex-col gap-2", props.className)}>
-      <p>
-        🔢 Value{" — "}
-        <span className="font-semibold">
-          {props.reading.value
-            ? `${props.reading.value.toFixed(2)} m³`
-            : "Unknown"}
-        </span>
-        {props.reading.imageUrl && (
-          <>
-            {" — "}
-            <Link href={props.reading.imageUrl} target="_blank">
-              <Button variant="link" className="text-base p-0 m-0 h-auto">
-                Image
-              </Button>
-            </Link>
-          </>
-        )}
+      <HouseholdReadingCardAttributesValue reading={props.reading} />
+      <HouseholdReadingCardAttributesConsumption reading={props.reading} />
+      <HouseholdReadingCardAttributesAvgConsumption reading={props.reading} />
+      <HouseholdReadingCardAttributesSaving reading={props.reading} />
+      <HouseholdReadingCardAttributesReward reading={props.reading} />
+    </div>
+  );
+}
+
+function HouseholdReadingCardAttributesValue(props: {
+  reading: HouseholdReading;
+}) {
+  return (
+    <div className="flex flex-row gap-2">
+      <p>👀 Value</p>
+      <p>—</p>
+      <p className="font-semibold">
+        {props.reading.value
+          ? `${props.reading.value.toFixed(2)} m³`
+          : "Undefined"}
       </p>
-      {props.reading.consumption && (
-        <p>
-          🚰 Consumption{" — "}
-          <span className="font-semibold">
-            {props.reading.consumption.toFixed(2)} m³ / day
-          </span>
-        </p>
+      {props.reading.imageUrl && (
+        <>
+          <p>—</p>
+          <Link href={props.reading.imageUrl} target="_blank">
+            <Button variant="link" className="text-base p-0 m-0 h-auto">
+              Image
+            </Button>
+          </Link>
+        </>
       )}
-      {props.reading.avgConsumption && (
-        <p>
-          ℹ️ Avg. consumption{" — "}
-          <span className="font-semibold">
-            {props.reading.avgConsumption.toFixed(2)} m³ / day
-          </span>
-        </p>
-      )}
-      {props.reading.reward && (
-        <p>
-          🪙 Reward{" — "}
-          <span className="font-semibold">
-            {formatEther(BigInt(props.reading.reward))} $B3TR
-          </span>
-          {props.reading.rewardTxHash && (
-            <>
-              {" — "}
-              <Link
-                href={`https://explore-testnet.vechain.org/transactions/${props.reading.rewardTxHash}`}
-                target="_blank"
-              >
-                <Button variant="link" className="text-base p-0 m-0 h-auto">
-                  Transaction
-                </Button>
-              </Link>
-            </>
-          )}
-        </p>
+    </div>
+  );
+}
+
+function HouseholdReadingCardAttributesConsumption(props: {
+  reading: HouseholdReading;
+}) {
+  if (props.reading.consumption === undefined) {
+    return <></>;
+  }
+
+  return (
+    <div className="flex flex-row gap-2">
+      <p>💦 Consumption</p>
+      <p>—</p>
+      <p className="font-semibold">{props.reading.consumption.toFixed(2)} m³</p>
+    </div>
+  );
+}
+
+function HouseholdReadingCardAttributesAvgConsumption(props: {
+  reading: HouseholdReading;
+}) {
+  if (props.reading.avgConsumption === undefined) {
+    return <></>;
+  }
+
+  return (
+    <div className="flex flex-row gap-2">
+      <p>🌊 Avg. Consumption</p>
+      <p>—</p>
+      <p className="font-semibold">
+        {props.reading.avgConsumption.toFixed(2)} m³
+      </p>
+    </div>
+  );
+}
+
+function HouseholdReadingCardAttributesSaving(props: {
+  reading: HouseholdReading;
+}) {
+  if (props.reading.saving === undefined) {
+    return <></>;
+  }
+
+  return (
+    <div className="flex flex-row gap-2">
+      <p>💙 Saving</p>
+      <p>—</p>
+      <p className="font-semibold">{props.reading.saving.toFixed(2)} m³</p>
+    </div>
+  );
+}
+
+function HouseholdReadingCardAttributesReward(props: {
+  reading: HouseholdReading;
+}) {
+  if (props.reading.reward === undefined) {
+    return <></>;
+  }
+
+  return (
+    <div className="flex flex-row gap-2">
+      <p>💰 Reward</p>
+
+      <p className="font-semibold">
+        {formatEther(BigInt(props.reading.reward))} $B3TR
+      </p>
+      {props.reading.rewardTxHash && (
+        <>
+          <p>—</p>
+          <Link
+            href={`https://explore-testnet.vechain.org/transactions/${props.reading.rewardTxHash}`}
+            target="_blank"
+          >
+            <Button variant="link" className="text-base p-0 m-0 h-auto">
+              Transaction
+            </Button>
+          </Link>
+        </>
       )}
     </div>
   );

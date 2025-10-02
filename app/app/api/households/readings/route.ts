@@ -1,11 +1,8 @@
 import { createFailedApiResponse, createSuccessApiResponse } from "@/lib/api";
-import {
-  calculateAvgConsumption,
-  calculateConsumption,
-} from "@/lib/consumption";
+import { calculateConsumption } from "@/lib/consumption";
 import { extractReadingFromImage } from "@/lib/gemini";
 import { uploadImage } from "@/lib/pinata";
-import { calculateReward, distributeReward } from "@/lib/reward";
+import { distributeReward } from "@/lib/reward";
 import { findHouseholds, updateHousehold } from "@/mongodb/services/household";
 import { NextRequest } from "next/server";
 import z from "zod";
@@ -53,24 +50,19 @@ export async function POST(request: NextRequest) {
     const value = await extractReadingFromImage(bodyParseResult.data.image);
 
     // Calculate consumption and average consumption
-    const readingBefore = household.readings.slice(-1)[0];
-    const consumption = calculateConsumption(readingBefore?.value, value);
-    const avgConsumption = calculateAvgConsumption(
-      household.size,
-      household.country
-    );
+    const { consumption, avgConsumption, saving } = calculateConsumption();
 
     // Calculate and distribute reward
-    const reward = calculateReward(consumption, avgConsumption);
-    const rewardTxHash = await distributeReward(reward);
+    const { reward, rewardTxHash } = await distributeReward();
 
     // Update household with new reading
     household.readings.push({
       created: new Date(),
       imageUrl: url,
-      value: value,
+      value,
       consumption,
       avgConsumption,
+      saving,
       reward,
       rewardTxHash,
     });
