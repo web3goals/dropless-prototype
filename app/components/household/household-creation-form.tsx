@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { Button } from "../ui/button";
+import { Calendar } from "../ui/calendar";
 import {
   Form,
   FormControl,
@@ -21,7 +22,6 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-// TODO: Add date
 export function HouseholdCreationForm(props: {
   onCreate: (household: Household) => void;
   className?: ClassValue;
@@ -33,6 +33,7 @@ export function HouseholdCreationForm(props: {
     size: z.coerce.number().gt(0),
     country: z.string().min(1),
     reading: z.coerce.number().gt(0),
+    readingDate: z.date(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,6 +60,7 @@ export function HouseholdCreationForm(props: {
         size: values.size,
         country: values.country,
         reading: values.reading,
+        readingDate: values.readingDate.toISOString(),
       });
       const household: Household = data.data.household;
 
@@ -76,7 +78,7 @@ export function HouseholdCreationForm(props: {
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         className={cn(
-          "w-full flex flex-col gap-4 items-center",
+          "w-full flex flex-col gap-4 items-start",
           props.className
         )}
       >
@@ -129,6 +131,23 @@ export function HouseholdCreationForm(props: {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="readingDate"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Last water meter reading date *</FormLabel>
+              <Calendar
+                mode="single"
+                selected={field.value}
+                onSelect={field.onChange}
+                captionLayout="dropdown"
+                disabled={isProcessing}
+              />
               <FormMessage />
             </FormItem>
           )}

@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       size: z.coerce.number().gt(0),
       country: z.string().min(1),
       reading: z.coerce.number().gt(0),
+      readingDate: z.string().min(1),
     });
 
     // Get and parse request data
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
       country: bodyParseResult.data.country,
       readings: [
         {
-          created: new Date(),
+          created: new Date(bodyParseResult.data.readingDate),
           value: bodyParseResult.data.reading,
         },
       ],
