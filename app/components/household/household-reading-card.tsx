@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 
 // TODO: Add share button
+// TODO: Display reading image url
 export function HouseholdReadingCard(props: {
   reading: HouseholdReading;
   className?: ClassValue;

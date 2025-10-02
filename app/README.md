@@ -12,4 +12,6 @@
 
 ```
 MONGODB_URI=""
+PINATA_JWT=""
+PINATA_GATEWAY=""
 ```

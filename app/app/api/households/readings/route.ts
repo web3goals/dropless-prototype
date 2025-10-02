@@ -1,4 +1,5 @@
 import { createFailedApiResponse, createSuccessApiResponse } from "@/lib/api";
+import { uploadImage } from "@/lib/pinata";
 import { findHouseholds, updateHousehold } from "@/mongodb/services/household";
 import { NextRequest } from "next/server";
 import z from "zod";
@@ -10,7 +11,7 @@ export async function POST(request: NextRequest) {
     // Define the schema for request body validation
     const bodySchema = z.object({
       owner: z.string().length(42),
-      reading: z.coerce.number().gt(0),
+      image: z.string().min(1),
     });
 
     // Get and parse request data
@@ -39,8 +40,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Upload reading image to Pinata
+    const { url } = await uploadImage(bodyParseResult.data.image);
+
     // Prepare data
     // TODO: Use real data
+    const value = 2.05;
     const consumption = 0.32;
     const avgConsumption = 0.5;
     const reward = "3000000000000000000"; // 3 $B3TR
@@ -50,7 +55,8 @@ export async function POST(request: NextRequest) {
     // Update household with new reading
     household.readings.push({
       created: new Date(),
-      value: bodyParseResult.data.reading,
+      imageUrl: url,
+      value: value,
       consumption,
       avgConsumption,
       reward,
