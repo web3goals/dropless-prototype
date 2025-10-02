@@ -1,8 +1,11 @@
 // TODO: Implement
 export function calculateConsumption(
-  readingBefore: number,
-  readingAfter: number
-): number {
+  readingBefore: number | undefined,
+  readingAfter: number | undefined
+): number | undefined {
+  if (readingBefore === undefined || readingAfter === undefined) {
+    return undefined;
+  }
   return 20 / 30;
 }
 
@@ -10,6 +13,6 @@ export function calculateConsumption(
 export function calculateAvgConsumption(
   householdSize: number,
   householdCountry: string
-): number {
+): number | undefined {
   return (householdSize * 12) / 30;
 }

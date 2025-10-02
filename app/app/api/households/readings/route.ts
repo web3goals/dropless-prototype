@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     // Calculate consumption and average consumption
     const readingBefore = household.readings.slice(-1)[0];
-    const consumption = calculateConsumption(readingBefore.value || 0, value);
+    const consumption = calculateConsumption(readingBefore?.value, value);
     const avgConsumption = calculateAvgConsumption(
       household.size,
       household.country

@@ -53,7 +53,9 @@ function HouseholdReadingCardAttributes(props: {
       <p>
         🔢 Value{" — "}
         <span className="font-semibold">
-          {props.reading.value.toFixed(2)} m³
+          {props.reading.value
+            ? `${props.reading.value.toFixed(2)} m³`
+            : "Unknown"}
         </span>
         {props.reading.imageUrl && (
           <>

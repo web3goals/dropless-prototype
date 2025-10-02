@@ -2,15 +2,18 @@ import { parseEther } from "viem";
 
 // TODO: Implement
 export function calculateReward(
-  consumption: number,
-  avgConsumption: number
-): string {
+  consumption: number | undefined,
+  avgConsumption: number | undefined
+): string | undefined {
+  if (consumption === undefined || avgConsumption === undefined) {
+    return undefined;
+  }
   return parseEther("2").toString();
 }
 
 // TODO: Implement
 export async function distributeReward(
-  reward: string
+  reward: string | undefined
 ): Promise<string | undefined> {
   if (!reward) {
     return undefined;

@@ -1,7 +1,7 @@
 export type HouseholdReading = {
   created: Date;
   imageUrl?: string;
-  value: number;
+  value?: number;
   consumption?: number;
   avgConsumption?: number;
   reward?: string;
