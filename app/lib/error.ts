@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 export function handleError(
   error: unknown,
-  args: {
+  config: {
     toastTitle?: string;
     disableToast?: boolean;
   }
@@ -11,8 +11,8 @@ export function handleError(
   // Print error
   console.error(error);
   // Display a toast
-  if (!args.disableToast) {
-    toast.error(args.toastTitle || "Something went wrong", {
+  if (!config.disableToast) {
+    toast.error(config.toastTitle || "Something went wrong", {
       description: getErrorMessage(error),
     });
   }
