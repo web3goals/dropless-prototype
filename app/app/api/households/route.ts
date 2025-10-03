@@ -1,4 +1,5 @@
 import { createFailedApiResponse, createSuccessApiResponse } from "@/lib/api";
+import { getErrorMessage } from "@/lib/error";
 import { Household } from "@/mongodb/models/household";
 import { findHouseholds, insertHousehold } from "@/mongodb/services/household";
 import { NextRequest } from "next/server";
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Failed to get households:", error);
     return createFailedApiResponse(
-      { message: "Internal server error, try again later" },
+      { message: `Failed to get households: ${getErrorMessage(error)}` },
       500
     );
   }
@@ -71,7 +72,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Failed to create a household:", error);
     return createFailedApiResponse(
-      { message: "Internal server error, try again later" },
+      { message: `Failed to create a household: ${getErrorMessage(error)}` },
       500
     );
   }

@@ -1,4 +1,5 @@
 import { createFailedApiResponse, createSuccessApiResponse } from "@/lib/api";
+import { getErrorMessage } from "@/lib/error";
 
 export async function POST() {
   try {
@@ -8,7 +9,7 @@ export async function POST() {
   } catch (error) {
     console.error("Failed to use contracts:", error);
     return createFailedApiResponse(
-      { message: "Internal server error, try again later" },
+      { message: `Failed to use contracts: ${getErrorMessage(error)}` },
       500
     );
   }
