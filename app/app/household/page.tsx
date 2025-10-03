@@ -5,9 +5,9 @@ import { Loading } from "@/components/loading";
 import { useWallet } from "@vechain/vechain-kit";
 
 export default function HouseholdPage() {
-  const { connectedWallet } = useWallet();
+  const { account } = useWallet();
 
-  if (!connectedWallet) {
+  if (!account) {
     return <Loading />;
   }
 

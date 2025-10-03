@@ -26,7 +26,7 @@ export function HouseholdCreationForm(props: {
   onCreate: (household: Household) => void;
   className?: ClassValue;
 }) {
-  const { connectedWallet } = useWallet();
+  const { account } = useWallet();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const formSchema = z.object({
@@ -50,7 +50,7 @@ export function HouseholdCreationForm(props: {
       console.log("Saving household...");
       setIsProcessing(true);
 
-      const address = connectedWallet?.address;
+      const address = account?.address;
       if (!address) {
         toast.warning("No wallet connected");
         return;

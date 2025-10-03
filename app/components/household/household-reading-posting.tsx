@@ -29,7 +29,7 @@ export function HouseholdReadingPosting(props: {
   onPost: (household: HouseholdModel) => void;
   className?: ClassValue;
 }) {
-  const { connectedWallet } = useWallet();
+  const { account } = useWallet();
   const [open, setOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [image, setImage] = useState<string | null>(null);
@@ -39,7 +39,7 @@ export function HouseholdReadingPosting(props: {
       console.log("Posting household reading...");
       setIsProcessing(true);
 
-      const address = connectedWallet?.address;
+      const address = account?.address;
       if (!address) {
         toast.warning("No wallet connected");
         return;

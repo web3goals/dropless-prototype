@@ -11,7 +11,7 @@ import { Household } from "./household";
 import { HouseholdCreation } from "./household-creation";
 
 export function HouseholdLoader() {
-  const { connectedWallet } = useWallet();
+  const { account } = useWallet();
   const [household, setHousehold] = useState<
     HouseholdModel | null | undefined
   >();
@@ -20,7 +20,7 @@ export function HouseholdLoader() {
     console.log("Loading household...");
     setHousehold(undefined);
 
-    const address = connectedWallet?.address;
+    const address = account?.address;
     if (!address) {
       toast.warning("No wallet connected");
       return;
@@ -36,7 +36,7 @@ export function HouseholdLoader() {
       .catch((error) =>
         handleError(error, { toastTitle: "Failed to load household" })
       );
-  }, [connectedWallet?.address]);
+  }, [account?.address]);
 
   if (household) {
     return (
