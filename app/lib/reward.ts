@@ -16,6 +16,8 @@ export function calculateReward(): {
   impact: number | undefined;
   reward: string | undefined;
 } {
+  console.log("Calculating reward...");
+
   const consumption = 20;
   const avgConsumption = 24;
   const saving = 4;
@@ -37,6 +39,8 @@ export async function sendReward(
   proof: string,
   impact: number
 ): Promise<string> {
+  console.log("Sending reward...");
+
   // Init VeChain client
   const thorClient = ThorClient.at(TESTNET_URL);
 

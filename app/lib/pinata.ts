@@ -8,6 +8,8 @@ const pinata = new PinataSDK({
 export async function uploadImage(
   image: string
 ): Promise<{ cid: string; url: string }> {
+  console.log("Uploading image...");
+
   const file = stringBase64ToFile(image, "image.png", "image/png");
   const upload = await pinata.upload.public.file(file);
 
