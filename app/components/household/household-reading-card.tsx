@@ -157,7 +157,7 @@ function HouseholdReadingCardAttributesReward(props: {
             target="_blank"
           >
             <Button variant="link" className="text-base p-0 m-0 h-auto">
-              Transaction
+              TX
             </Button>
           </Link>
         </>
