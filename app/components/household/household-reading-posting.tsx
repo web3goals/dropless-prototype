@@ -36,6 +36,7 @@ export function HouseholdReadingPosting(props: {
 
   async function handleSubmit() {
     try {
+      console.log("Posting household reading...");
       setIsProcessing(true);
 
       const address = connectedWallet?.address;
@@ -60,7 +61,7 @@ export function HouseholdReadingPosting(props: {
       setOpen(false);
       setImage(null);
     } catch (error) {
-      handleError(error, { toastTitle: "Failed to submit the form" });
+      handleError(error, { toastTitle: "Failed to post household reading" });
     } finally {
       setIsProcessing(false);
     }

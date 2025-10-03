@@ -18,6 +18,7 @@ export function handleError(
         description.length > 240
           ? description.substring(0, 240) + "..."
           : description,
+      duration: 10_000,
     });
   }
 }

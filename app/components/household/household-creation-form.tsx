@@ -47,6 +47,7 @@ export function HouseholdCreationForm(props: {
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     try {
+      console.log("Saving household...");
       setIsProcessing(true);
 
       const address = connectedWallet?.address;
@@ -67,7 +68,7 @@ export function HouseholdCreationForm(props: {
       props.onCreate(household);
       toast.success("Saved");
     } catch (error) {
-      handleError(error, { toastTitle: "Failed to submit the form" });
+      handleError(error, { toastTitle: "Failed to save household" });
     } finally {
       setIsProcessing(false);
     }
