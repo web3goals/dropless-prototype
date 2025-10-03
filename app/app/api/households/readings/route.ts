@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Extract reading value from image
-    let value: number | undefined = undefined;
+    let value: number;
     try {
       value = await extractReadingValueFromImage(bodyParseResult.data.image);
     } catch (error) {
@@ -57,18 +57,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Calculate consumption and average consumption
-    const { consumption, avgConsumption, impact, saving, reward } =
-      calculateReward();
+    // Get current date
+    const now = new Date();
 
-    // Send reward if applicable
-    let rewardTx: string | undefined = undefined;
-    if (
-      impact !== undefined &&
-      impact !== 0 &&
-      reward !== undefined &&
-      reward !== "0"
-    ) {
+    // Calculate consumption and average consumption
+    let consumption: number;
+    let avgConsumption: number;
+    let saving: number;
+    let impact: bigint;
+    let reward: bigint;
+    try {
+      const calculateRewardResponse = calculateReward(household, value, now);
+      consumption = calculateRewardResponse.consumption;
+      avgConsumption = calculateRewardResponse.avgConsumption;
+      saving = calculateRewardResponse.saving;
+      impact = calculateRewardResponse.impact;
+      reward = calculateRewardResponse.reward;
+    } catch (error) {
+      throw new Error(`Failed to calculate reward: ${getErrorMessage(error)}`);
+    }
+
+    // Send reward
+    let rewardTx: string | undefined;
+    if (reward > BigInt(0)) {
       try {
         rewardTx = await sendReward(reward, household.owner, url, impact);
       } catch (error) {
@@ -78,13 +89,13 @@ export async function POST(request: NextRequest) {
 
     // Update household with new reading
     household.readings.push({
-      created: new Date(),
+      created: now,
       imageUrl: url,
       value,
       consumption,
       avgConsumption,
       saving,
-      reward,
+      reward: reward.toString(),
       rewardTx,
     });
     await updateHousehold(household);

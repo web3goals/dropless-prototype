@@ -1,4 +1,5 @@
 import { appConfig } from "@/config/app";
+import { Household } from "@/mongodb/models/household";
 import { ABIFunction, Address, Clause, Transaction } from "@vechain/sdk-core";
 import {
   ProviderInternalBaseWallet,
@@ -8,21 +9,51 @@ import {
 } from "@vechain/sdk-network";
 import { hexToBytes, parseEther } from "viem";
 
-// TODO: Implement
-export function calculateReward(): {
-  consumption: number | undefined;
-  avgConsumption: number | undefined;
-  saving: number | undefined;
-  impact: number | undefined;
-  reward: string | undefined;
+const CONSUMPTION_PER_PERSON_PER_HOUR = 12 / 30 / 24;
+
+export function calculateReward(
+  household: Household,
+  newReadingValue: number,
+  newReadingDate: Date
+): {
+  consumption: number;
+  avgConsumption: number;
+  saving: number;
+  impact: bigint;
+  reward: bigint;
 } {
   console.log("Calculating reward...");
 
-  const consumption = 20;
-  const avgConsumption = 24;
-  const saving = 4;
-  const impact = saving * 1_000_000; // 1 cubic meter is equal to 1,000,000 mililiters
-  const reward = parseEther("4").toString(); // 1 $B3TR per cubic meter saved
+  // Get last reading value
+  const lastReading = household.readings.slice(-1)[0];
+  if (!lastReading) {
+    throw new Error("No previous reading found");
+  }
+  const lastReadingValue = lastReading.value;
+  if (!lastReadingValue) {
+    throw new Error("Last reading value is undefined");
+  }
+
+  // Calculate consumption
+  const consumption = newReadingValue - lastReadingValue;
+  if (consumption < 0) {
+    throw new Error("Consumption is negative");
+  }
+
+  // Calculate average consumption
+  const hoursBetweenReadings =
+    (newReadingDate.getTime() - lastReading.created.getTime()) /
+    (1000 * 60 * 60);
+  const avgConsumption =
+    household.size * CONSUMPTION_PER_PERSON_PER_HOUR * hoursBetweenReadings;
+
+  // Calculate saving and impact
+  const saving = avgConsumption - consumption;
+  const impact = BigInt(Math.floor(saving * 1_000_000)); // 1 cubic meter is equal to 1,000,000 mililiters
+
+  // Calculate reward
+  const reward =
+    saving > 0 ? parseEther(Math.floor(saving).toString()) : parseEther("0"); // 1 $B3TR per cubic meter saved
 
   return {
     consumption,
@@ -34,10 +65,10 @@ export function calculateReward(): {
 }
 
 export async function sendReward(
-  amount: string,
+  amount: bigint,
   receiver: string,
   proof: string,
-  impact: number
+  impact: bigint
 ): Promise<string> {
   console.log("Sending reward...");
 
@@ -76,7 +107,7 @@ export async function sendReward(
   });
   const clauses = [
     Clause.callFunction(contractAddress, functionAbi, [
-      BigInt(amount),
+      amount,
       receiver,
       proof,
       impact,
