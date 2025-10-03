@@ -1,15 +1,15 @@
 import { createFailedApiResponse, createSuccessApiResponse } from "@/lib/api";
-import { calculateConsumption } from "@/lib/consumption";
-import { extractReadingFromImage } from "@/lib/gemini";
+import { getErrorMessage } from "@/lib/error";
+import { extractReadingValueFromImage } from "@/lib/gemini";
 import { uploadImage } from "@/lib/pinata";
-import { sendReward } from "@/lib/reward";
+import { calculateReward, sendReward } from "@/lib/reward";
 import { findHouseholds, updateHousehold } from "@/mongodb/services/household";
 import { NextRequest } from "next/server";
 import z from "zod";
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("Creating a household reading...");
+    console.log("Posting household reading...");
 
     // Define the schema for request body validation
     const bodySchema = z.object({
@@ -35,25 +35,37 @@ export async function POST(request: NextRequest) {
     });
     const household = households[0];
     if (!household) {
-      return createFailedApiResponse(
-        {
-          message: "Household not found",
-        },
-        404
-      );
+      throw new Error("Household not found");
     }
 
     // Upload reading image to Pinata
+    // TODO: Add try...catch
     const { url } = await uploadImage(bodyParseResult.data.image);
 
     // Extract reading value from image
-    const value = await extractReadingFromImage(bodyParseResult.data.image);
+    // TODO: Add try...catch
+    const value = await extractReadingValueFromImage(
+      bodyParseResult.data.image
+    );
 
     // Calculate consumption and average consumption
-    const { consumption, avgConsumption, saving } = calculateConsumption();
+    const { consumption, avgConsumption, impact, saving, reward } =
+      calculateReward();
 
-    // Calculate and distribute reward
-    const { reward, rewardTxHash } = await sendReward();
+    // Send reward if applicable
+    let rewardTx: string | undefined = undefined;
+    if (
+      impact !== undefined &&
+      impact !== 0 &&
+      reward !== undefined &&
+      reward !== "0"
+    ) {
+      try {
+        rewardTx = await sendReward(reward, household.owner, url, impact);
+      } catch (error) {
+        throw new Error(`Failed to send reward: ${getErrorMessage(error)}`);
+      }
+    }
 
     // Update household with new reading
     household.readings.push({
@@ -64,15 +76,17 @@ export async function POST(request: NextRequest) {
       avgConsumption,
       saving,
       reward,
-      rewardTxHash,
+      rewardTx,
     });
     await updateHousehold(household);
 
     return createSuccessApiResponse({ household });
   } catch (error) {
-    console.error("Failed to create a household reading:", error);
+    console.error("Failed to post household reading:", error);
     return createFailedApiResponse(
-      { message: "Internal server error, try again later" },
+      {
+        message: `Failed to post household reading: ${getErrorMessage(error)}`,
+      },
       500
     );
   }

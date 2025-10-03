@@ -149,11 +149,11 @@ function HouseholdReadingCardAttributesReward(props: {
       <p className="font-semibold">
         {formatEther(BigInt(props.reading.reward))} $B3TR
       </p>
-      {props.reading.rewardTxHash && (
+      {props.reading.rewardTx && (
         <>
           <p>—</p>
           <Link
-            href={`https://explore-testnet.vechain.org/transactions/${props.reading.rewardTxHash}`}
+            href={`https://explore-testnet.vechain.org/transactions/${props.reading.rewardTx}`}
             target="_blank"
           >
             <Button variant="link" className="text-base p-0 m-0 h-auto">
