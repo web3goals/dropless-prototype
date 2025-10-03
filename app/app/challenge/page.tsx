@@ -1,4 +1,5 @@
-// TODO: Implement
+import { Challenge } from "@/components/challenge/challenge";
+
 export default async function ChallengePage() {
-  return <></>;
+  return <Challenge />;
 }
