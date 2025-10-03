@@ -8,7 +8,14 @@ Powered by VeChain and VeBetterDAO.
 
 ## ⚙️ How it works
 
-...
+1. **Login** with your VeWorld wallet or social account.
+2. **Setup your household** - add size, country, and current water meter reading.
+3. **Submit a photo** of your water meter after some time.
+4. **AI processes** your photo using Google Gemini to extract the reading.
+5. **Get rewarded** - earn 1 $B3TR token for every cubic meter saved below average.
+6. **Track progress** on your household page with consumption history and rewards.
+
+The entire process is automated through VeChain smart contracts integrated with VeBetterDAO.
 
 ## 🔗 Artifacts
 
