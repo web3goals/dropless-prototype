@@ -29,20 +29,14 @@ The entire process is automated through VeChain smart contracts integrated with 
 
 ## 🛠️ Technologies
 
-1. VeChain Kit – enables wallet connection and interaction with smart contracts on VeChain.
-
-2. VeBetterDAO – motivates users to take sustainable actions and earn crypto rewards.
-
-3. Google Gemini – extracts and processes data from user photos.
-
-4. Pinata – provides decentralized storage for proof images used in VeBetterDAO.
+1. **VeChain Kit** – enables wallet connection and interaction with smart contracts on **VeChain**.
+2. **VeBetterDAO** – motivates users to take sustainable actions and earn crypto rewards.
+3. **Google Gemini** – extracts and processes data from user photos.
+4. **Pinata** – provides decentralized storage for proof images used in **VeBetterDAO**.
 
 ## 📋 Plans
 
 1. Native mobile apps to make access seamless anytime, anywhere.
-
 2. Support for diverse households and water meters to ensure everyone can participate.
-
 3. Challenges and achievements to motivate users and build community engagement.
-
 4. Staking and Mainnet launch to unlock the full potential of the ecosystem.
