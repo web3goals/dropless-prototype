@@ -12,8 +12,12 @@ export function handleError(
   console.error(error);
   // Display a toast
   if (!config.disableToast) {
+    const description = getErrorMessage(error);
     toast.error(config.toastTitle || "Something went wrong", {
-      description: getErrorMessage(error),
+      description:
+        description.length > 240
+          ? description.substring(0, 240) + "..."
+          : description,
     });
   }
 }
