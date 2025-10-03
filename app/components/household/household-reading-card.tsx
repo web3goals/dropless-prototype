@@ -145,7 +145,7 @@ function HouseholdReadingCardAttributesReward(props: {
   return (
     <div className="flex flex-row gap-2">
       <p>💰 Reward</p>
-
+      <p>—</p>
       <p className="font-semibold">
         {formatEther(BigInt(props.reading.reward))} $B3TR
       </p>
