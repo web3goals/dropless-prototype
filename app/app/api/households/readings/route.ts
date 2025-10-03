@@ -39,14 +39,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Upload reading image to Pinata
-    // TODO: Add try...catch
-    const { url } = await uploadImage(bodyParseResult.data.image);
+    let url: string;
+    try {
+      const uploadImageResponse = await uploadImage(bodyParseResult.data.image);
+      url = uploadImageResponse.url;
+    } catch (error) {
+      throw new Error(`Failed to upload image: ${getErrorMessage(error)}`);
+    }
 
     // Extract reading value from image
-    // TODO: Add try...catch
-    const value = await extractReadingValueFromImage(
-      bodyParseResult.data.image
-    );
+    let value: number | undefined = undefined;
+    try {
+      value = await extractReadingValueFromImage(bodyParseResult.data.image);
+    } catch (error) {
+      throw new Error(
+        `Failed to extract reading value: ${getErrorMessage(error)}`
+      );
+    }
 
     // Calculate consumption and average consumption
     const { consumption, avgConsumption, impact, saving, reward } =
