@@ -67,7 +67,7 @@ export function HouseholdCreationForm(props: {
       props.onCreate(household);
       toast.success("Saved");
     } catch (error) {
-      handleError(error, "Failed to submit the form, try again later");
+      handleError(error, { toastTitle: "Failed to submit the form" });
     } finally {
       setIsProcessing(false);
     }

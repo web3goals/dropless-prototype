@@ -3,15 +3,17 @@ import { toast } from "sonner";
 
 export function handleError(
   error: unknown,
-  message?: string,
-  disableToast?: boolean
+  args: {
+    toastTitle?: string;
+    disableToast?: boolean;
+  }
 ) {
   // Print error
   console.error(error);
   // Display a toast
-  if (!disableToast) {
-    toast.error("Something went wrong", {
-      description: message || getErrorMessage(error),
+  if (!args.disableToast) {
+    toast.error(args.toastTitle || "Something went wrong", {
+      description: getErrorMessage(error),
     });
   }
 }

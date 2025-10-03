@@ -34,7 +34,7 @@ export function HouseholdLoader() {
         setHousehold(data?.data?.households[0] || null);
       })
       .catch((error) =>
-        handleError(error, "Failed to load household, try again later")
+        handleError(error, { toastTitle: "Failed to load household" })
       );
   }, [connectedWallet?.address]);
 

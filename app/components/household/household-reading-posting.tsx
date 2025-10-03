@@ -60,7 +60,7 @@ export function HouseholdReadingPosting(props: {
       setOpen(false);
       setImage(null);
     } catch (error) {
-      handleError(error, "Failed to submit the form, try again later");
+      handleError(error, { toastTitle: "Failed to submit the form" });
     } finally {
       setIsProcessing(false);
     }
@@ -152,7 +152,7 @@ function HouseholdPostReadingCamera(props: {
         videoRef.current.srcObject = stream;
       }
     } catch (error) {
-      handleError(error, "Failed to access camera");
+      handleError(error, { toastTitle: "Failed to access camera" });
     }
   }
 
